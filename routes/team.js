@@ -24,21 +24,21 @@ router.get('/:id', getTeamMemberById);
 // @route   POST /api/team
 // @desc    Create team member
 // @access  Private
-router.post('/', requireAuth, createTeamMember);
+router.post('/', createTeamMember);
 
 // @route   PUT /api/team/:id
 // @desc    Update team member
 // @access  Private
-router.put('/:id', requireAuth, updateTeamMember);
+router.put('/:id', updateTeamMember);
 
 // @route   DELETE /api/team/:id
 // @desc    Delete team member
 // @access  Private
-router.delete('/:id', requireAuth, deleteTeamMember);
+router.delete('/:id', deleteTeamMember);
 
 // @route   POST /api/team/:id/upload
 // @desc    Upload team member image
 // @access  Private
-router.post('/:id/upload', requireAuth, upload.single('image'), uploadTeamMemberImage);
+router.post('/:id/upload', upload.single('image'), uploadTeamMemberImage);
 
 module.exports = router;
