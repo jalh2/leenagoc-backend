@@ -15,10 +15,9 @@ const pageContentSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.Mixed, // Flexible content structure
     required: true
   },
-  image: {
+  images: [{
     type: String, // URL/path to image
-    default: null
-  },
+  }],
   isActive: {
     type: Boolean,
     default: true

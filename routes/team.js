@@ -9,7 +9,7 @@ const {
   uploadTeamMemberImage,
   upload 
 } = require('../controllers/teamController');
-const { requireAuth } = require('../middleware/auth');
+
 
 // @route   GET /api/team
 // @desc    Get all team members

@@ -130,15 +130,13 @@ const createService = async (req, res) => {
   try {
     console.log('DEBUG: createService - Request body:', req.body);
     const { title, shortDescription, fullDescription, category, features, images } = req.body; // Added images
-    const userId = req.session?.userId;
 
     const serviceData = {
       title,
       shortDescription,
       fullDescription,
       category,
-      features: features ? (typeof features === 'string' ? JSON.parse(features) : features) : [],
-      lastUpdatedBy: userId
+      features: features ? (typeof features === 'string' ? JSON.parse(features) : features) : []
     };
 
     if (images && Array.isArray(images)) {
@@ -186,15 +184,13 @@ const updateService = async (req, res) => {
   try {
     const { id } = req.params;
     const { title, shortDescription, fullDescription, category, features } = req.body; // Note: 'images' are not handled here directly to prevent accidental overwrite.
-    const userId = req.session?.userId;
 
     const updateData = {
       title,
       shortDescription,
       fullDescription,
       category,
-      features: features ? (typeof features === 'string' ? JSON.parse(features) : features) : [],
-      lastUpdatedBy: userId
+      features: features ? (typeof features === 'string' ? JSON.parse(features) : features) : []
     };
 
     const service = await Service.findByIdAndUpdate(

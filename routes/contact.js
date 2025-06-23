@@ -8,17 +8,17 @@ const {
   replyToMessage, 
   deleteContactMessage 
 } = require('../controllers/contactController');
-const { requireAuth } = require('../middleware/auth');
+
 
 // @route   GET /api/contact
 // @desc    Get all contact messages
 // @access  Private
-router.get('/', requireAuth, getAllContactMessages);
+router.get('/', getAllContactMessages);
 
 // @route   GET /api/contact/:id
 // @desc    Get contact message by ID
 // @access  Private
-router.get('/:id', requireAuth, getContactMessageById);
+router.get('/:id', getContactMessageById);
 
 // @route   POST /api/contact
 // @desc    Create contact message (from website form)
@@ -28,16 +28,16 @@ router.post('/', createContactMessage);
 // @route   PUT /api/contact/:id/read
 // @desc    Mark message as read
 // @access  Private
-router.put('/:id/read', requireAuth, markAsRead);
+router.put('/:id/read', markAsRead);
 
 // @route   POST /api/contact/:id/reply
 // @desc    Reply to contact message
 // @access  Private
-router.post('/:id/reply', requireAuth, replyToMessage);
+router.post('/:id/reply', replyToMessage);
 
 // @route   DELETE /api/contact/:id
 // @desc    Delete contact message
 // @access  Private
-router.delete('/:id', requireAuth, deleteContactMessage);
+router.delete('/:id', deleteContactMessage);
 
 module.exports = router;

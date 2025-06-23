@@ -49,8 +49,8 @@ const getAllContent = async (req, res) => {
 // Create or update content
 const upsertContent = async (req, res) => {
   try {
-    const { page, title, content, image } = req.body;
-    const userId = req.session?.userId;
+    const { page, title, content, images } = req.body;
+
 
     const updatedContent = await PageContent.findOneAndUpdate(
       { page },
@@ -58,8 +58,7 @@ const upsertContent = async (req, res) => {
         page,
         title,
         content,
-        image,
-        lastUpdatedBy: userId
+        images
       },
       {
         new: true,

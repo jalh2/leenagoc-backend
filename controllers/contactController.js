@@ -122,7 +122,7 @@ const replyToMessage = async (req, res) => {
   try {
     const { id } = req.params;
     const { replyMessage } = req.body;
-    const userId = req.session?.userId;
+
 
     const message = await ContactMessage.findByIdAndUpdate(
       id,
@@ -130,12 +130,11 @@ const replyToMessage = async (req, res) => {
         isReplied: true,
         reply: {
           message: replyMessage,
-          repliedBy: userId,
           repliedAt: new Date()
         }
       },
       { new: true }
-    ).populate('reply.repliedBy', 'username');
+    );
 
     if (!message) {
       return res.status(404).json({

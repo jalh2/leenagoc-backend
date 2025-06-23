@@ -87,7 +87,6 @@ const getTeamMemberById = async (req, res) => {
 const createTeamMember = async (req, res) => {
   try {
     const { name, position, bio, email, phone, image } = req.body;
-    const userId = req.session?.userId;
 
     // Build team member object
     const newMemberData = {
@@ -95,8 +94,7 @@ const createTeamMember = async (req, res) => {
       position,
       bio,
       email,
-      phone,
-      lastUpdatedBy: userId
+      phone
     };
 
     // If an image was uploaded in this same request, persist its relative path
@@ -128,7 +126,6 @@ const updateTeamMember = async (req, res) => {
   try {
     const { id } = req.params;
     const { name, position, bio, email, phone, image } = req.body;
-    const userId = req.session?.userId;
 
     const teamMember = await TeamMember.findByIdAndUpdate(
       id,
@@ -138,8 +135,7 @@ const updateTeamMember = async (req, res) => {
         bio,
         email,
         phone,
-        ...(image ? { image } : {}),
-        lastUpdatedBy: userId
+        ...(image ? { image } : {})
       },
       { new: true, runValidators: true }
     );

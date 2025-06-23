@@ -1,6 +1,6 @@
 const express = require('express');
 const PageContent = require('../models/PageContent');
-const { requireAuth, requireAdmin } = require('../middleware/auth');
+
 
 const router = express.Router();
 
@@ -23,9 +23,9 @@ router.get('/:pageName', async (req, res) => {
 
 // PUT update page content (e.g., for 'hero')
 // Protected: Admin only
-router.put('/:pageName', requireAuth, requireAdmin, async (req, res) => {
+router.put('/:pageName', async (req, res) => {
   const { pageName } = req.params;
-  const { title, content, image } = req.body; // Image is now expected as a Base64 string in the body
+  const { title, content, images } = req.body; // Expect 'images' array for slideshow
 
   try {
     let pageData = await PageContent.findOne({ page: pageName });
@@ -53,17 +53,12 @@ router.put('/:pageName', requireAuth, requireAdmin, async (req, res) => {
       }
     }
 
-    if (image) {
-      // If a new image (Base64 string) is provided, update it.
-      // Basic validation for data URI might be good here in a real app.
-      pageData.image = image;
-    }
-    // If image is explicitly set to null or empty string by client, allow clearing it
-    else if (req.body.hasOwnProperty('image') && (image === null || image === '')) {
-        pageData.image = null;
+    if (images && Array.isArray(images)) {
+      // If new images (Base64 strings) are provided, update the array.
+      pageData.images = images;
     }
     
-    pageData.lastUpdatedBy = req.user._id; // From isAuthenticated middleware
+
 
     const updatedPageContent = await pageData.save();
     res.json(updatedPageContent);
